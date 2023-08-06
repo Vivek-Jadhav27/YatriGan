@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ticketapp/screen/mobileWallet.dart';
-import 'package:ticketapp/widget/cardItem.dart';
+import 'package:yatrigan/screen/mobileWallet.dart';
+import 'package:yatrigan/widget/cardItem.dart';
 
 import 'creditCard.dart';
 import 'debitCard.dart';
@@ -13,7 +13,6 @@ class Payment extends StatefulWidget {
 }
 
 class _PaymentState extends State<Payment> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +35,7 @@ class _PaymentState extends State<Payment> {
         ),
       ),
       body: SafeArea(
-        child: Column(
+          child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListView.builder(
@@ -53,4 +52,3 @@ class _PaymentState extends State<Payment> {
     );
   }
 }
-

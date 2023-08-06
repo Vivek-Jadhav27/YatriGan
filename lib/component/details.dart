@@ -1,6 +1,7 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:ticketapp/main.dart';
-import 'package:ticketapp/screen/buses.dart';
+import 'package:yatrigan/main.dart';
+import 'package:yatrigan/screen/buses.dart';
 import 'datePicker.dart';
 import '../widget/fromBox.dart';
 import 'personCount.dart';
@@ -107,9 +108,7 @@ class _DetailsState extends State<Details> {
   Widget submitButton() {
     return GestureDetector(
       onTap: () {
-        if (fromLocationAll == null ||
-            toLocationAll == null ||
-            selectedDateAll == null) {
+        if (fromLocationAll == null || toLocationAll == null) {
           showDialog(
             context: context,
             builder: (context) {
@@ -131,8 +130,8 @@ class _DetailsState extends State<Details> {
         } else if (fromLocationAll == toLocationAll) {
           return;
         } else {
-          requiredBusItem.clear();
           busItem.clear();
+          _addbus();
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => Buses()));
         }
@@ -147,7 +146,7 @@ class _DetailsState extends State<Details> {
           borderRadius: BorderRadius.circular(10),
           color: Color.fromARGB(255, 250, 114, 17),
         ),
-        child: Text(
+        child: const Text(
           'Search',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -158,5 +157,43 @@ class _DetailsState extends State<Details> {
         ),
       ),
     );
+  }
+
+  void _addbus() async {
+    DatabaseReference databaseReference =
+        FirebaseDatabase.instance.ref('Buses');
+    List<String> buses = [];
+    List<int> bookedSeats = [2, 3, 4, 6];
+    List<String> from = [], to = [];
+    List<DateTime> dates = [];
+
+    Map<String, dynamic> toJson(int index) {
+      return {
+        'From': fromLocationAll,
+        'To': toLocationAll,
+        'Depart': '8:00 AM',
+        'Arrival': '11:00 Am',
+        'Price': '${120 + index * 100}',
+        'BookedSeat': bookedSeats,
+      };
+    }
+
+    for (int i = 0; i < 6; i++) {
+      dates.add(selectedDateAll.add(Duration(days: i)));
+          DatabaseEvent event = await databaseReference
+          .child('${fromLocationAll}To$toLocationAll')
+            .child('${dates[i].day}-${dates[i].month}-${dates[i].year}').once();
+            if (event.snapshot.value == null) {
+              await databaseReference
+            .child('${fromLocationAll}To$toLocationAll')
+            .child('${dates[i].day}-${dates[i].month}-${dates[i].year}')
+            .child('BUS${i + 2}${i + 1}')
+            .set(toJson(i)); 
+            }
+            else{
+              
+            }
+            
+    }
   }
 }

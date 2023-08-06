@@ -1,7 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ticketapp/screen/ticket.dart';
+import 'package:yatrigan/screen/ticket.dart';
 import '../Utilitis/service.dart';
+import '../main.dart';
+import 'package:yatrigan/Utilitis/firebaseServise.dart';
 
 String cardHolderName = '';
 String cardNumber = '';
@@ -215,6 +218,7 @@ class _CreditCardState extends State<CreditCard> {
                     color: const Color(0xFF499D95),
                     onPressed: () {
                       if (Service().validatepay(context)) {
+                        FirebaseService().addBookedSeat();
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Payment Successful'),
@@ -245,4 +249,5 @@ class _CreditCardState extends State<CreditCard> {
       ),
     );
   }
+
 }

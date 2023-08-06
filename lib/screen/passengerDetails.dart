@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ticketapp/Utilitis/service.dart';
-import 'package:ticketapp/main.dart';
-import 'package:ticketapp/screen/payment.dart';
+import 'package:yatrigan/Utilitis/service.dart';
+import 'package:yatrigan/main.dart';
+import 'package:yatrigan/screen/payment.dart';
 
 import '../widget/passengerCard.dart';
 
@@ -14,10 +14,10 @@ class Passenger extends StatefulWidget {
 }
 
 class _PassengerState extends State<Passenger> {
-  
-  final TextEditingController _emailtextEditingController =TextEditingController();
-  final TextEditingController _phonetextEditingController = TextEditingController();
-  
+  final TextEditingController _emailtextEditingController =
+      TextEditingController();
+  final TextEditingController _phonetextEditingController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _PassengerState extends State<Passenger> {
             child: ListView.builder(
               itemCount: maxPassengerAll,
               itemBuilder: (context, index) {
-                return PassengerCard(context: context,index: index);
+                return PassengerCard(context: context, index: index);
               },
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
@@ -129,4 +129,4 @@ class _PassengerState extends State<Passenger> {
       ),
     );
   }
- }
+}

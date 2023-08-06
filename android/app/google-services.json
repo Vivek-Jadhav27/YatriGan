@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "63987641513",
+    "project_id": "yatrigan-dd098",
+    "storage_bucket": "yatrigan-dd098.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:63987641513:android:e429e5f0849a1362318db8",
+        "android_client_info": {
+          "package_name": "com.example.yatrigan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "63987641513-0bj090kioh96jais910vre7co5s22pue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhXdSU92b0FteK9efoUvwQZ5YyF_dyFRA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "63987641513-0bj090kioh96jais910vre7co5s22pue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

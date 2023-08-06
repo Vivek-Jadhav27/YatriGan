@@ -1,4 +1,4 @@
-# ticketapp
+# yatrigan
 
 A new Flutter project.
 

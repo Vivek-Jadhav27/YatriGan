@@ -1,9 +1,11 @@
 import 'dart:io';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:ticketapp/main.dart';
-import 'package:ticketapp/screen/home.dart';
+import 'package:yatrigan/Utilitis/firebaseServise.dart';
+import 'package:yatrigan/Utilitis/pdfservice.dart';
+import 'package:yatrigan/main.dart';
 
+String tickdetID = '';
 class Ticket extends StatefulWidget {
   const Ticket({super.key});
 
@@ -12,13 +14,35 @@ class Ticket extends StatefulWidget {
 }
 
 class _TicketState extends State<Ticket> {
+  String characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  int idLength = 8;
+  
+
+  String generateRandomTicketId(String allowedChars, int idLength) {
+    final Random random = Random();
+    final int charsLength = allowedChars.length;
+
+    String id = '';
+    for (int i = 0; i < idLength; i++) {
+      id += allowedChars[random.nextInt(charsLength)];
+    }
+    return id;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    tickdetID = generateRandomTicketId(characters, idLength);
+    FirebaseService().addTicket(tickdetID);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           'Ticket',
           style: TextStyle(color: Color(0xFF499D95)),
         ),
@@ -28,17 +52,17 @@ class _TicketState extends State<Ticket> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('Are you sure?'),
-              content: Text('Do you want to exit the app?'),
+              title: const Text('Are you sure?'),
+              content: const Text('Do you want to exit the app?'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('No'),
+                  child: const Text('No'),
                 ),
                 TextButton(
-                  onPressed: () => Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => exit(0))),
-                  child: Text('Yes'),
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => exit(0))),
+                  child: const Text('Yes'),
                 ),
               ],
             ),
@@ -48,31 +72,42 @@ class _TicketState extends State<Ticket> {
         child: Container(
           decoration: BoxDecoration(
             color: Color(0xFF499D95),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(15),
           ),
-          height: 600,
-          width: double.infinity,
-          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 60),
           padding: EdgeInsets.all(20),
-          child: Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'E - Ticket',
-                  style: TextStyle(
-                    color: Color(0xFFff7259),
-                    fontSize: 20,
-                    fontFamily: "Hellix",
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'E - Ticket',
+                      style: TextStyle(
+                        color: Color(0xFFff7259),
+                        fontSize: 20,
+                        fontFamily: "Hellix",
+                      ),
+                    ),
+                    Text(tickdetID.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: "Hellix",
+                        ))
+                  ],
                 ),
                 SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Bus Id : ' + busNameAll.toString(),
+                      'Bus Id : $busNameAll',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -93,7 +128,7 @@ class _TicketState extends State<Ticket> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'From : ' + fromLocationAll.toString(),
+                      'From : $fromLocationAll',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -101,7 +136,7 @@ class _TicketState extends State<Ticket> {
                       ),
                     ),
                     Text(
-                      'To : ' + toLocationAll.toString(),
+                      'To : $toLocationAll',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -133,7 +168,7 @@ class _TicketState extends State<Ticket> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'No of Seats : ' + maxPassengerAll.toString(),
+                  'No of Seats : $maxPassengerAll',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -153,7 +188,7 @@ class _TicketState extends State<Ticket> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [ 
+                  children: [
                     Text(
                       'Name',
                       style: TextStyle(
@@ -328,7 +363,9 @@ class _TicketState extends State<Ticket> {
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 20),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      Pdf().createPDF();
+                    },
                     child: Text(
                       'Print Ticket',
                       style: TextStyle(
@@ -349,7 +386,7 @@ class _TicketState extends State<Ticket> {
 
   Widget passengerdetails(int index) {
     return Container(
-      margin: EdgeInsets.only( right: 10),
+      margin: EdgeInsets.only(right: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,

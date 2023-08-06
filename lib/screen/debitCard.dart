@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ticketapp/screen/ticket.dart';
+import 'package:yatrigan/screen/ticket.dart';
 import '../Utilitis/service.dart';
 import 'creditCard.dart';
 
@@ -16,7 +16,7 @@ class _DebitCard extends State<DebitCard> {
   final TextEditingController _cardNumber = TextEditingController();
   final TextEditingController _expiryDate = TextEditingController();
   final TextEditingController _cvv = TextEditingController();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,7 +129,7 @@ class _DebitCard extends State<DebitCard> {
                               keyboardType: TextInputType.number,
                               onChanged: (value) {
                                 setState(() {
-                                  expiryDate = value ;
+                                  expiryDate = value;
                                 });
                               },
                               inputFormatters: [
@@ -207,7 +207,10 @@ class _DebitCard extends State<DebitCard> {
                             content: Text('Payment Successful'),
                           ),
                         );
-                        Navigator.push(context , MaterialPageRoute(builder: (context) => const Ticket()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Ticket()));
                       }
                     },
                     child: const Center(
@@ -229,6 +232,4 @@ class _DebitCard extends State<DebitCard> {
       ),
     );
   }
-
-  
-  }
+}

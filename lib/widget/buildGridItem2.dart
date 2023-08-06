@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../screen/selectseat.dart';
@@ -21,11 +22,9 @@ class _BuildGridItem2State extends State<BuildGridItem2> {
   }
 
   void setTrueIndices() {
-     for (int index in trueIndices2) {
-      if (index >= 0 && index < isBooked2.length) {
-        setState(() {
-          isBooked2[index] = true;
-        });
+     for (int i = 0; i < isBooked2.length; i++) {
+      if (trueIndices2.contains(i)) {
+        isBooked2[i] = true;
       }
     }
   }

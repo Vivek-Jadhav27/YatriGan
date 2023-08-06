@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import '../main.dart';
-import '../screen/buses.dart';
 import '../screen/creditCard.dart';
 
 class Service {
@@ -12,15 +10,22 @@ class Service {
       if (personAll[i].isEmpty) {
         hasError = true;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Please enter passenger name'),
+          ),
+        );
+      } else if (personAll[i].length < 3) {
+        hasError = true;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please enter valid passenger name'),
           ),
         );
       }
       if (ageAll[i] == 0) {
         hasError = true;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Please enter age'),
           ),
         );
@@ -28,20 +33,54 @@ class Service {
       if (genderAll[i].isEmpty) {
         hasError = true;
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Plearse male')));
-      }
+            .showSnackBar(const SnackBar(content: Text('Please enter gender')));
+      } 
     }
-    if (emailAll.isEmpty) {
+    if (!validateEmail(context, emailAll)) {
       hasError = true;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Please enter email')));
     }
-    if (phoneAll.isEmpty) {
+    if (!validatePhone(context, phoneAll)) {
       hasError = true;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Please enter phone number')));
     }
     return hasError;
+  }
+
+  bool validateEmail(BuildContext context, String email) {
+    String pattern = r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$';
+    RegExp regExp = RegExp(pattern);
+    if (email == '') {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Please enter email')));
+      return false;
+    } else if (!regExp.hasMatch(email)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter valid email'),
+        ),
+      );
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  bool validatePhone(BuildContext context, String phone) {
+    String pattern = r'^[0-9]{10}$';
+    RegExp regExp = RegExp(pattern);
+    if (phone == '') {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Please enter phone')));
+      return false;
+    } else if (!regExp.hasMatch(phone)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter valid phone'),
+        ),
+      );
+      return false;
+    } else {
+      return true;
+    }
   }
 
   bool validateCardHolderName(BuildContext context, String cardHolderName) {

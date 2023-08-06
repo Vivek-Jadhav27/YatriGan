@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:ticketapp/main.dart';
+import 'package:yatrigan/main.dart';
+import 'package:yatrigan/screen/buses.dart';
 import '../screen/selectseat.dart';
 
 class BusItem extends StatelessWidget {
-  const BusItem(
-      {super.key,
-      required this.from,
-      required this.to,
-      required this.depart,
-      required this.maxSeats,
-      required this.busId,
-      required this.arrive,
-      required this.price});
+  const BusItem({
+    super.key,
+    required this.from,
+    required this.to,
+    required this.depart,
+    required this.maxSeats,
+    required this.busId,
+    required this.arrive,
+    required this.price,
+    required this.seat,
+  });
 
   final String busId;
   final String from;
@@ -20,6 +23,7 @@ class BusItem extends StatelessWidget {
   final String arrive;
   final int maxSeats;
   final int price;
+  final List<int> seat;
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +35,25 @@ class BusItem extends StatelessWidget {
         departAll = depart;
         arrivalAll = arrive;
         priceAll = price;
-        maxPassengerAll = maxSeats;
         isSelected1 = List<bool>.filled(24, false);
         isSelected2 = List<bool>.filled(16, false);
+        isBooked1 = List<bool>.filled(24, false);
+        isBooked2 = List<bool>.filled(16, false);
+        trueIndices1.clear();
+        trueIndices2.clear();
         selected = 0;
+        bookingseat = seat;
+        
+        for (int i = 0; i < bookingseat.length; i++) {
+          for (int j = 0; j < 40; j++) {
+            if (bookingseat[i] == (j ~/ 3) * 5 + (j % 3) + 1) {
+            trueIndices1.add(j);
+          }
+          if (bookingseat[i] == (j ~/ 2) * 5 + (j % 2) + 4) {
+          trueIndices2.add(j);
+          }
+        }
+        }
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -159,7 +178,7 @@ class BusItem extends StatelessWidget {
                   Align(
                     alignment: Alignment.topRight,
                     child: Text(
-                      '10 Seats',
+                      (40 - maxSeats).toString() + ' Seats',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

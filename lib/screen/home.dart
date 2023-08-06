@@ -1,7 +1,7 @@
 import 'dart:io';
-
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:ticketapp/component/details.dart';
+import 'package:yatrigan/component/details.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,6 +11,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  FirebaseDatabase database = FirebaseDatabase.instance;
+  DatabaseReference databaseReference = FirebaseDatabase.instance.ref("Buses");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,20 +42,19 @@ class _HomeState extends State<Home> {
           );
           return false;
         },
-
         child: Stack(
           children: <Widget>[
             Container(
               height: 350.0,
               width: double.infinity,
               decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(45.0),
-              bottomRight: Radius.circular(45.0)),
-              color: Color(0xFF138675),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(45.0),
+                    bottomRight: Radius.circular(45.0)),
+                color: Color(0xFF138675),
               ),
-              ),
-             Details(),
+            ),
+            Details(),
           ],
         ),
       ),

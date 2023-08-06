@@ -1,4 +1,4 @@
-name: ticketapp
+name: yatrigan
 description: A new Flutter project.
 
 publish_to: 'none' 
@@ -14,8 +14,16 @@ dependencies:
 
   fluttertoast: ^8.2.2
   dropdown_search: ^0.6.3
-  intl: ^0.17.0
+  intl: ^0.18.0
+  open_file: ^3.3.2
+  pdf : ^3.6.0
   cupertino_icons: ^1.0.2
+  firebase_core: ^2.15.0
+  cloud_firestore: ^4.8.4
+  google_fonts: ^4.0.4
+  firebase_database: ^10.2.4
+  path_provider: ^2.0.15
+  syncfusion_flutter_pdf: ^22.2.7
   
   
 
@@ -36,7 +44,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/fonts/
+    - lib/images/intro.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

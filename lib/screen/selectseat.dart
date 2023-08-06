@@ -1,16 +1,19 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:ticketapp/main.dart';
-import 'package:ticketapp/screen/passengerDetails.dart';
-import 'package:ticketapp/widget/buildGridItem1.dart';
-import 'package:ticketapp/widget/buildGridItem2.dart';
+import 'package:yatrigan/main.dart';
+import 'package:yatrigan/screen/passengerDetails.dart';
+import 'package:yatrigan/widget/buildGridItem1.dart';
+import 'package:yatrigan/widget/buildGridItem2.dart';
 
 int selected = 0;
 List<bool> isSelected1 = List<bool>.filled(24, false);
 List<bool> isSelected2 = List<bool>.filled(16, false);
 List<bool> isBooked1 = List<bool>.filled(24, false);
 List<bool> isBooked2 = List<bool>.filled(16, false);
-List<int> trueIndices1 = [2, 6, 5, 9, 14, 15, 16, 8, 21];
-List<int> trueIndices2 = [2, 8, 9, 12, 14];
+List<int> trueIndices1 = [];
+List<int> trueIndices2 = [];
+List<int> bookingseat = [];
+
 
 class SelectSeat extends StatefulWidget {
   const SelectSeat({
@@ -22,7 +25,21 @@ class SelectSeat extends StatefulWidget {
 }
 
 class _SelectSeatState extends State<SelectSeat> {
-  
+  FirebaseDatabase firebaseDatabase = FirebaseDatabase.instance;
+  DatabaseReference databaseReference = FirebaseDatabase.instance
+      .ref('Buses')
+      .child('${fromLocationAll}To$toLocationAll')
+      .child(
+          '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}')
+      .child('$busNameAll');
+
+  @override
+  void initState() {
+    super.initState();
+    
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

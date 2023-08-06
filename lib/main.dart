@@ -1,6 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ticketapp/screen/home.dart';
+import 'package:yatrigan/firebase_options.dart';
+import 'package:yatrigan/screen/home.dart';
 
 final locations = [
   'Ahmedabad',
@@ -30,10 +33,14 @@ int priceAll = 0;
 int maxPassengerAll = 1;
 int totalfareAll = 0;
 int resevationChargeAll = 0;
-int tollTaxAll = 0;
-int serviceTaxAll = 0;
+int tollTaxAll = 8;
+int serviceTaxAll = 24;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -47,7 +54,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-  
     super.initState();
   }
 
